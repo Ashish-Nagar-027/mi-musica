@@ -1,9 +1,12 @@
+import HomePage from "@/components/landing-page/Home"
 
 
-export default function Home() {
+const page = () => {
   return (
- <div>
-    mi musica app 
- </div>
-  );
+    <div>
+      <HomePage />
+    </div>
+  )
 }
+
+export default page

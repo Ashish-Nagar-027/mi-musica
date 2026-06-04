@@ -1,21 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Signup from "./sign-up";
 import SignIn from "./sign-in";
-import { authClient, useSession } from "@/lib/auth-client";
-import { redirect } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 const AuthScreen = () => {
   const [showSignup, setshowSignup] = useState<boolean>(false);
+
+  const router = useRouter()
       const { 
         data: session, 
-        isPending
+        isPending 
     } = useSession() 
 
-    if(session){
-        redirect('/')
+  useEffect(() => {
+   if(session && !isPending){
+        router.replace('/')
     }
+  },[router, session, isPending,])
+
+
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center flex-col">
