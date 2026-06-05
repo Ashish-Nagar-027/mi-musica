@@ -29,13 +29,13 @@ export default function HomePage() {
             </div>
 
             {/* Hero Heading */}
-            <h1 className="max-w-2xl text-6xl font-bold leading-none">
+            <h1 className="max-w-2xl text-5xl font-bold leading-none">
               Your Stream,
-              <span className="text-primary italic"> Their Choice.</span>
+              <span className=" italic text-fuchsia-300/90 "> Their Choice.</span>
             </h1>
 
             {/* Hero Description */}
-            <p className="max-w-lg text-lg leading-relaxed text-on-surface-variant">
+            <p className="max-w-lg text-md leading-relaxed text-on-surface-variant">
               The first interactive music platform where creators and fans sync
               in real-time. Broadcast your sound and let your audience decide
               the vibe.

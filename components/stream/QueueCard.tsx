@@ -28,7 +28,7 @@ export default function QueueCard({
   onVote: (streamId: string, vote: "upvote" | "downvote") =>  Promise<void>;
 }) {
   return (
-    <div className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl transition-all hover:border-fuchsia-400/40 hover:bg-white/[0.08]">
+    <div className="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-xl transition-all hover:border-fuchsia-300/90/40 hover:bg-white/[0.08]">
       <div className="relative h-16 w-16 overflow-hidden rounded-xl">
         <img
           src={item.thumbnail_url}

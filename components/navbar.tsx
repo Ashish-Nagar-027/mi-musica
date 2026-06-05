@@ -32,8 +32,8 @@ const Navbar = () => {
       <nav className="fixed top-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-surface/80 px-10 py-4 backdrop-blur-xl">
         {/* Logo + Links */}
         <div className="flex items-center gap-8">
-          <Link href={'/'} className="text-primary text-2xl font-bold tracking-tight">
-            Mi-Musica
+          <Link href={'/'} className="font-sans text-fuchsia-300/90  text-2xl font-bold tracking-tight">
+            SonicPulse
           </Link>
 
           <div className="hidden gap-6 md:flex"></div>

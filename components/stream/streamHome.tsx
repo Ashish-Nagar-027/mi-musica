@@ -188,7 +188,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
           <section className="flex flex-col gap-6 lg:col-span-7">
             <div className="flex items-center justify-between">
               <h2 className="text-4xl font-bold">Main Stage</h2>
-              <button onClick={handleShareUrl} className=" text-zinc-500 border py-2 px-4 rounded-xl  hover:bg-fuchsia-400 active:bg-fuchsia-300 cursor-pointer ">
+              <button onClick={handleShareUrl} className=" text-zinc-500 border py-2 px-4 rounded-xl  hover:bg-fuchsia-300/90 active:bg-fuchsia-300 cursor-pointer ">
                 Share 
               </button>
             </div>
@@ -225,12 +225,12 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
 
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent hidden" />
 
-                {/* <button className="absolute left-1/2 top-1/2 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-fuchsia-400 text-black shadow-[0_0_30px_rgba(232,121,249,.4)]">
+                {/* <button className="absolute left-1/2 top-1/2 flex h-24 w-24 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-fuchsia-300/90 text-black shadow-[0_0_30px_rgba(232,121,249,.4)]">
                   <Play className="h-10 w-10 fill-current" />
                 </button> */}
 
                 <div className="absolute bottom-8 left-10">
-                  <span className="mb-4 inline-block rounded-full bg-fuchsia-400 px-3 py-1 text-xs font-bold text-black">
+                  <span className="mb-4 inline-block rounded-full bg-fuchsia-300/90 px-3 py-1 text-xs font-bold text-black">
                     NOW STREAMING
                   </span>
 
@@ -253,7 +253,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
                 </div>
                 </> : 
                   <div className="absolute top-1/2 left-1/2 -translate-1/2">
-                  <span className="mb-4 inline-block rounded-full border border-fuchsia-400 px-8 py-4 text-xl font-bold text-fuchsia-400 ">
+                  <span className="mb-4 inline-block rounded-full border border-fuchsia-300/80 px-8 py-4 text-xl font-bold text-fuchsia-300/90 ">
                     Nothing to Stream
                   </span>
                   </div>
@@ -264,7 +264,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
              <button 
              disabled={nextStreamLoading} 
              onClick={handlePlayStream} 
-             className=" cursor-pointer rounded-full bg-fuchsia-400 px-3 py-2 text-xs font-bold text-black">
+             className=" cursor-pointer rounded-full bg-fuchsia-300/90 px-3 py-2 text-xs font-bold text-black">
                     {nextStreamLoading ? "Loading Next...":"Play Next"}
                 </button>}
 
@@ -282,7 +282,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
-                {queue.length === 0  ? <span className="text-center">No songs found</span >: queue.map((item) => (
+                {queue?.length === 0  ? <span className="text-center">No songs found</span >: queue.map((item) => (
                   <QueueCard
                     key={item.id}
                     item={item}
@@ -297,7 +297,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
 
           {/* Right Side */}
           <aside className="lg:col-span-5">
-            <div className="rounded-[32px] border border-fuchsia-400/20 bg-white/5 p-6 backdrop-blur-xl">
+            <div className="rounded-[32px] border border-fuchsia-300/90/20 bg-white/5 p-6 backdrop-blur-xl">
               <h4 className="mb-1 text-2xl font-semibold">
                 Submit to the Pulse
               </h4>
@@ -314,14 +314,14 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     placeholder="YouTube URL..."
-                    className="w-full rounded-xl border border-zinc-700 bg-zinc-950 py-4 pl-12 pr-4 outline-none transition focus:border-fuchsia-400"
+                    className="w-full rounded-xl border border-zinc-700 bg-zinc-950 py-4 pl-12 pr-4 outline-none transition focus:border-fuchsia-300/90"
                   />
                 </div>
 
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
-                  className="w-full rounded-xl bg-fuchsia-400 py-4 text-lg font-bold text-black transition hover:shadow-[0_0_30px_rgba(232,121,249,.35)] disabled:opacity-60"
+                  className="w-full rounded-xl bg-fuchsia-300/90 py-4 text-lg font-bold text-black transition hover:shadow-[0_0_30px_rgba(232,121,249,.35)] disabled:opacity-60"
                 >
                   {loading
                     ? "Processing..."
@@ -339,7 +339,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
       </main>
 
       {/* Floating Action Button */}
-      <button className="group fixed bottom-10 right-10 flex h-16 w-16 items-center justify-center rounded-full bg-fuchsia-400 text-black shadow-2xl transition hover:scale-110">
+      <button className="group fixed bottom-10 right-10 flex h-16 w-16 items-center justify-center rounded-full bg-fuchsia-300/90 text-black shadow-2xl transition hover:scale-110">
         <MessageCircle className="h-7 w-7 transition group-hover:rotate-12" />
 
         <div className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
