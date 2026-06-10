@@ -32,6 +32,7 @@ const createStreamSchema = z.object({
   }, {
     message: "Invalid YouTube URL",
   }),
+  spaceId : z.string()
 });
 
 
@@ -68,7 +69,7 @@ export async function POST(req: NextRequest){
 
       const existingStreams = await prisma.stream.findFirst({
         where : {
-            userId: creatorId,
+            spaceId: data.spaceId,
             played: false
         }, 
         select: {
@@ -82,7 +83,8 @@ export async function POST(req: NextRequest){
                 userId: creatorId,
                 url: data.url,
                 extractedId,
-                active: !existingStreams
+                active: !existingStreams,
+                spaceId: data.spaceId
             }
         })
 
@@ -106,12 +108,12 @@ export async function POST(req: NextRequest){
 export async function GET(req: NextRequest){
     try {
 
-        const creatorId = req.nextUrl.searchParams.get('creatorId')
+        const spaceId = req.nextUrl.searchParams.get('spaceId')
         const currentUserId = await getCurrentUserId()
 
         const streams = await prisma.stream.findMany({
             where: {
-                userId: creatorId ?? "",
+                spaceId: spaceId ?? "",
                 played: false
             },
             include: {
@@ -132,7 +134,11 @@ export async function GET(req: NextRequest){
    
         return NextResponse.json(
             {streams: streams?.filter(s => !s?.active )
-                .map((s) => ({...s, upvotes:s._count?.upvotes, haveUpVoted: s.upvotes.length ? true : false }) ), 
+                .map((s) => (
+                    {...s, 
+                        upvotes:s._count?.upvotes, 
+                        haveUpVoted: s.upvotes.length ? true : false 
+                    })), 
 
                 currentStream:currentStream.length > 0 ? currentStream[0] : null
             })

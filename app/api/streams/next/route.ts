@@ -4,13 +4,15 @@ import { NextResponse, type NextRequest } from "next/server";
 
 
 
-export async function GET() {
+export async function GET(req: NextRequest) {
     try {
           const currentUserId = await getCurrentUserId()
+          const spaceId = await req.nextUrl.searchParams.get('spaceId')
+          
 
           const deleteCurrentStream = await prisma.stream.updateMany({
              where: {
-               userId: currentUserId,
+               spaceId: spaceId,
                active: true
              },
              data: {
@@ -23,14 +25,20 @@ export async function GET() {
        
           const activateNextStream = await prisma.stream.findFirst({
             where: {
-                userId : currentUserId,
+                spaceId : spaceId,
                 active: false,
-                played: false
+                played: false,
             },
-            orderBy: {
-                createdAt: 'asc'
-            }
+            include: {
+               _count : {
+                select: {
+                    upvotes: true
+                }
+               }
+            },
           })
+        //  const activateNextStream = await prisma.upvote.findFirst({})
+
           if(!activateNextStream){
           return  NextResponse.json({message: "no next stream found",  nextStream: null})
           }
