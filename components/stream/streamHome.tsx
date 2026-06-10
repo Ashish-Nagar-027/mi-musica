@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import YoutubeVideoPlayer from "./YoutubeVideoPlayer";
 import Image from "next/image";
 import Navbar from "../navbar";
+import { usePathname } from "next/navigation";
 
 type QueueItem = {
   id: string;
@@ -30,14 +31,15 @@ type QueueItem = {
 
 
 
-export default function Streams({creatorId , isAdmin=false}: {creatorId: string, isAdmin:boolean}) {
+export default function Streams({spaceId , isAdmin=false ,userId}: {spaceId: string, isAdmin:boolean,userId: string}) {
   const [queue, setQueue] = useState<QueueItem[]>([]);
   const [currentSong, setCurrentSong] = useState<QueueItem | null>(null);
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
   const [nextStreamLoading, setNextStreamLoading] = useState(false);
   const [apiError, setApiError] = useState("");
-  const userId = creatorId
+  const location = usePathname()
+
 
 
 
@@ -87,7 +89,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
         setLoading(true)
       const res = await fetch('/api/streams/?creatorId='+userId, {
         method: "POSt",
-        body: JSON.stringify({url})
+        body: JSON.stringify({url, spaceId})
       })
       const result = await res.json()
     //   console.log('result ',result)
@@ -118,11 +120,11 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
 
         isFetching = true
       try {
-       const res = await fetch('/api/streams/?creatorId='+userId)
+       const res = await fetch('/api/streams/?spaceId='+spaceId)
        const result = await res.json()
        const streams = result.streams
        const currentStream = result.currentStream
-
+        
        setQueue(streams?.sort((a: QueueItem,b: QueueItem) => b?.upvotes-a?.upvotes))
        if(currentStream ){
            setCurrentSong(currentStream)
@@ -136,7 +138,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
     fetchStreams()
 
   const intervalId = setInterval(() => {
-  console.log("polling...");
+
   fetchStreams();
 }, 10000);
 
@@ -146,7 +148,8 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
 
   const handleShareUrl = () => {
     if(userId){
-      const url = window.location.host+"/stream/"+userId
+      // const url = window.location.host+"/stream/"+userId
+      const url = window.location.host+location
       navigator.clipboard.writeText(url)
       toast.success("copied!")
     } else {
@@ -158,7 +161,7 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
   const handlePlayStream = async () => {
     try {
         setNextStreamLoading(true)
-        const res = await fetch("api/streams/next")
+        const res = await fetch("/api/streams/next?spaceId="+spaceId)
         const result = await res.json()
 
         if(result.nextStream){
@@ -339,13 +342,13 @@ export default function Streams({creatorId , isAdmin=false}: {creatorId: string,
       </main>
 
       {/* Floating Action Button */}
-      <button className="group fixed bottom-10 right-10 flex h-16 w-16 items-center justify-center rounded-full bg-fuchsia-300/90 text-black shadow-2xl transition hover:scale-110">
+      {/* <button className="group fixed bottom-10 right-10 flex h-16 w-16 items-center justify-center rounded-full bg-fuchsia-300/90 text-black shadow-2xl transition hover:scale-110">
         <MessageCircle className="h-7 w-7 transition group-hover:rotate-12" />
 
         <div className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
           12
         </div>
-      </button>
+      </button> */}
     </div>
   );
 }

@@ -12,7 +12,7 @@ const Navbar = () => {
 
   const router = useRouter();
   const  pathName = usePathname()
-  console.log('path', pathName)
+  
 
   const handleLogout = async () => {
 
@@ -44,10 +44,10 @@ const Navbar = () => {
           {data?.session ? (
             <>
              {pathName === "/" && <Link
-                href={"/stream"}
+                href={"/spaces"}
                 className="material-symbols-outlined transition hover:text-primary active:scale-95"
               >
-                Dashboard
+                Create Space
               </Link>}
               <button
                 onClick={handleLogout}
