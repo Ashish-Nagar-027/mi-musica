@@ -10,10 +10,10 @@ export async function GET(req: NextRequest) {
           const spaceId = await req.nextUrl.searchParams.get('spaceId')
           
 
-          const deleteCurrentStream = await prisma.stream.updateMany({
+          const updateStreams = await prisma.stream.updateMany({
              where: {
                spaceId: spaceId,
-               active: true
+               active: true,
              },
              data: {
                 active : false,
@@ -29,15 +29,13 @@ export async function GET(req: NextRequest) {
                 active: false,
                 played: false,
             },
-            include: {
-               _count : {
-                select: {
-                    upvotes: true
-                }
-               }
-            },
+           orderBy: {
+            upvotes: {
+                _count: "desc"
+            }
+           }
           })
-        //  const activateNextStream = await prisma.upvote.findFirst({})
+
 
           if(!activateNextStream){
           return  NextResponse.json({message: "no next stream found",  nextStream: null})
